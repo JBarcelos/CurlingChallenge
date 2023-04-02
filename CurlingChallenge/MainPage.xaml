@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CurlingChallenge.MainPage"
+             xmlns:viewmodels="clr-namespace:CurlingChallenge.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+    <ContentPage.BindingContext>
+        <viewmodels:CurlingViewModel />
+    </ContentPage.BindingContext>
+    
+    <Grid ColumnDefinitions="400, *" RowDefinitions="*, 120">
+        <Frame>
+            <VerticalStackLayout
+                Spacing="40"
+                Margin="1, 0"
+                HorizontalOptions="FillAndExpand">
+
+                <VerticalStackLayout>
+                    <Label Text="Select a Shape:" />
+                    <Picker x:Name="shapePicker"
+                        ItemsSource="{Binding CurlingOptions}"
+                        ItemDisplayBinding="{Binding DisplayLabel}"
+                        HorizontalOptions="FillAndExpand"
+                        SelectedItem="{Binding Curling, Mode=TwoWay}"
+                    />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout>
+                    <Label Text="Number of Shapes:" />
+                    <Entry Keyboard="Numeric"
+                           Text="{Binding Shapes}" />
+                    <Label Text="{Binding Errors[Shapes]}" StyleClass="ErrorMessage" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout>
+                    <Label Text="Shape Size:" />
+                    <Entry Keyboard="Numeric"
+                           Text="{Binding Size}" />
+                    <Label Text="{Binding Errors[Size]}" StyleClass="ErrorMessage"/>
+                </VerticalStackLayout>
+
+                <Button
+                    Text="Simulate"
+                    Command="{Binding SimulateCommand}" />
+            </VerticalStackLayout>
+        </Frame>
+        <Frame Grid.Column="1">
+            <ScrollView>
+                <GraphicsView x:Name="graphicalOutput"
+                              Drawable="{Binding Renderer}"/>
+            </ScrollView>
+        </Frame>
+        <Frame Grid.Row="1" Grid.ColumnSpan="2">
+            <VerticalStackLayout>
+                <Label Text="Output" />
+                <Entry x:Name="textOutput"
+                       Text="{Binding TextOutput}"/>
+            </VerticalStackLayout>
+        </Frame>
+    </Grid>
+
+</ContentPage>
